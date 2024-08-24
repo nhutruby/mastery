@@ -1,6 +1,6 @@
 # Mastery
 
-**Quiz: User answers questions**
+**Quiz: User answers questions with Elixir**
 
 ## Installation
 
