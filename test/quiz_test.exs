@@ -8,12 +8,7 @@ defmodule QuizTest do
     end)
     |> Enum.find(fn other -> other != template end)
   end
-  defp eventually_pick_other_quiz(quiz, template) do
-    Stream.repeatedly(fn ->
-      Quiz.select_question(quiz)
-    end)
-    |> Enum.find(fn other -> other.current_question.template != template end)
-  end
+
   defp template(quiz) do
     quiz.current_question.template
   end
@@ -64,15 +59,15 @@ defmodule QuizTest do
 
     test "templates are unique until cycle repeats", %{quiz: quiz} do
       first_quiz = Quiz.select_question(quiz)
-      IO.inspect(first_quiz)
-      IO.inspect("...................................")
-      #second_quiz = eventually_pick_other_quiz(quiz, template(first_quiz))
+      # IO.inspect(first_quiz)
+      # IO.inspect("...................................")
+      # second_quiz = eventually_pick_other_quiz(quiz, template(first_quiz))
       second_quiz = Quiz.select_question(first_quiz)
-      IO.inspect(second_quiz)
-      IO.inspect("...................................")
+      # IO.inspect(second_quiz)
+      # IO.inspect("...................................")
 
       reset_quiz = Quiz.select_question(second_quiz)
-      IO.inspect(reset_quiz)
+      # IO.inspect(reset_quiz)
       assert template(first_quiz) != template(second_quiz)
       assert template(reset_quiz) in [template(first_quiz), template(second_quiz)]
     end
